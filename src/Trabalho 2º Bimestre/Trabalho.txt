@@ -1,0 +1,114 @@
+num_elementos([], 0).
+
+num_elementos([C|R], X) :-
+    num_elementos(R, Y),
+    X is Y + 1. 
+    
+    
+pertence_a(P,[P|_]).
+
+pertence_a(P,[_|C]):-
+    pertence_a(P,C).    
+
+1 -> verificar tamanho da lista
+
+num_elementos([], 0).
+
+num_elementos([C|R], X) :-
+    num_elementos(R, Y),
+    X is Y + 1. 
+
+2-> 11 elementos iguais e 1 diferentes
+
+
+iguais([],0).
+
+iguais(L,X):-
+    diferente(L,K),
+    num_elementos(L,C),
+    X is C - K.
+        
+
+diferente([],0).
+
+diferente([C|R],X):-
+    diferente(R,F), % para percorrer a lista até o final até que L tenha o ultimo 
+    elem_diferentes([C|R],Y),
+    num_elementos(Y,X).
+    
+
+3 - > qual é o elemento diferente
+
+elem_diferentes([], []).
+
+elem_diferentes([C|R], [C|R2]) :-
+    elem_diferentes(R, R2),
+    not(pertence_a(C, R2)), % aqui verifica se ja não contou o elemento
+    not(pertence_a(C, R)). % verifica se tem repetido
+    
+elem_diferentes([C|R], X) :-
+    elem_diferentes(R, X),
+    not(pertence_a(C,X)).  %v verifica penultimo item com as listas de resposta
+    
+
+
+4 - > qual a posição do diferente
+
+
+
+diferente([],0).
+
+diferente([C|R],X):-
+    diferente(R,F), % para percorrer a lista até o final até que L tenha o ultimo 
+    elem_diferentes([C|R],Y),
+    num_elementos(Y,X).
+    
+posicaodiferente([],D,0).
+
+posicaodiferente([C|R],C,1). % se a cabeça for igual ao diferente o X é 1
+    
+
+posicaodiferente([C|R],D,X):-
+    posicaodiferente(R,D,X1),
+    X is X1 + 1.
+       
+
+5 - > quais sao os elementos iguais
+
+elem_iguais([], []).
+
+elem_iguais([C|R], [C|R2]) :-
+    elem_iguais(R, R2),
+    not(pertence_a(C, R2)),
+    pertence_a(C, R).
+    
+elem_iguais([_|R], X) :-
+    elem_iguais(R, X).    
+    
+
+6 - > verifica se o diferente é maior que o maior 
+
+
+
+verificamaior(D,I,"Maior"):-
+    D > I.
+
+verificamaior(D,I,"Menor"):-
+    D < I.
+
+verificamaior(D,D,"Igual").
+
+
+
+Exercicio
+
+
+
+moeda_diferente([],0,0).
+
+moeda_diferente(L,Posi,Peso):-
+    elem_diferentes(L,[Diferente|_]),
+    posicaodiferente(L,Diferente,Posi),
+    elem_iguais(L,[Igual|_]),
+    verificamaior(Diferente,Igual,Peso).
+    
